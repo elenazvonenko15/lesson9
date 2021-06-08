@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script>
+		const notification = [
+			{
+				app: 'telegram',
+				message: 'Some text message',
+				sender: 'Ivan Petrov',
+				date: '04/06/2021',
+			},
+			{
+				app: 'telegram',
+				message: 'More text',
+				sender: 'Marina Sorokina',
+				date: '05/06/2021',
+			},
+			{
+				app: 'telegram',
+				message: '2',
+				sender: 'Marina Sorokina',
+				date: '05/06/2021',
+			},
+			{
+				app: 'telegram',
+				message: 'Even more text',
+				sender: 'Ivan Petrov',
+				date: '06/06/2021',
+			},
+			{
+				app: 'telegram',
+				message: '1',
+				sender: 'Ivan Petrov',
+				date: '06/06/2021',
+			},
+			{
+				app: 'instagram',
+				message: 'Like like',
+				sender: 'Semen Ivanov',
+				date: '05/06/2021',
+			},
+			{
+				app: 'instagram',
+				message: 'Like',
+				sender: 'Semen Ivanov',
+				date: '05/06/2021',
+			},
+			{
+				app: 'instagram',
+				message: '123',
+				sender: 'Ivan Petrov',
+				date: '05/06/2021',
+			},
+			{
+				app: 'whatsapp',
+				message: 'Text message 1',
+				sender: 'Semen Ivanov',
+				date: '06/06/2021',
+			},
+			{
+				app: 'whatsapp',
+				message: '555',
+				sender: 'Semen Ivanov',
+				date: '06/06/2021',
+			},
+			{
+				app: 'whatsapp',
+				message: 'Text message 2',
+				sender: 'Marina Sorokina',
+				date: '06/06/2021',
+			},
+		];
+
+
+		// reduce
+
+		function groupByParameter1(arr, param,secondParam) {
+			return arr.reduce(function(accum, currentVal) {
+				var key = currentVal[param];
+				if(accum[key]) {
+					var result = accum[key].find(function(item, index) {
+						if(item[0][secondParam] === currentVal[secondParam]) {
+							return item;
+						} 
+					});
+
+					result ? result.push(currentVal) : accum[key].push([currentVal]);
+
+				} else {
+					accum[key] = [[currentVal]]
+				}
+				return accum;
+			}, {})
+		}
+
+		console.log(groupByParameter1(notification, 'app', 'sender'));
+
+
+		// for
+
+		function groupByParameter2(arr, firstParam, secondParam) {
+			var result = {};
+			for (var i = 0; i <= arr.length - 1; i++) {
+				var key = arr[i][firstParam];
+				if(result[key]) {
+					
+					var isUserAdded = false;
+
+					for (var a = 0; a <= result[key].length-1; a++) {
+						if(result[key][a][0][secondParam] === arr[i][secondParam]) {
+							result[key][a].push(arr[i]);
+							isUserAdded = true;
+						} }
+					if (!isUserAdded) {
+							result[key].push([arr[i]])
+					}
+
+				} else {
+					result[key] = [[arr[i]]]
+				}
+			}
+
+			return result;
+		}
+
+		console.log(groupByParameter2(notification, 'app', 'sender'));
+
+
+		// forEach
+
+		// function groupByParameter3(arr, param) {
+		// 	var result = {};
+			
+		// 	arr.forEach(function(item){
+		// 		var key = item[param];
+		// 		result[key] ? result[key].push(item) : result[key] = [item];
+
+		// 	})
+
+		// 	return result;
+		// }
+
+		// console.log(groupByParameter3(notification, 'app'));
+
+
+	</script>
+</body>
+</html>
